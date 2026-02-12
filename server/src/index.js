@@ -13,8 +13,10 @@ const errorHandler = require('./middleware/errorHandler');
 const app = express();
 
 const PORT = process.env.PORT || 5000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/bits_and_volts_users';
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
+const MONGODB_URI =
+  process.env.MONGODB_URI || 'mongodb://localhost:27017/bits_and_volts_users';
+const CLIENT_ORIGIN =
+  process.env.CLIENT_ORIGIN || 'http://localhost:5173';
 
 // Connect to DB
 connectDB(MONGODB_URI);
@@ -25,6 +27,7 @@ app.use(
     origin: CLIENT_ORIGIN,
   })
 );
+
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -33,17 +36,30 @@ app.use(express.urlencoded({ extended: true }));
 const uploadsPath = path.join(__dirname, '..', 'uploads');
 app.use('/uploads', express.static(uploadsPath));
 
-// Routes
+// ================= API ROUTES =================
 app.get('/api/health', (req, res) => {
   res.json({ success: true, message: 'API is running' });
 });
 
 app.use('/api/users', userRoutes);
 
-// Error handler
+// ================= PRODUCTION FRONTEND SERVING =================
+if (process.env.NODE_ENV === 'production') {
+  const clientBuildPath = path.join(__dirname, '../../client/dist');
+
+  // Serve static files
+  app.use(express.static(clientBuildPath));
+
+  // Handle React routing
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+  });
+}
+
+// ================= ERROR HANDLER =================
 app.use(errorHandler);
 
+// ================= SERVER START =================
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
-

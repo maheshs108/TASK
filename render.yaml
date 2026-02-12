@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: task-backend
+    env: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: MONGODB_URI
+        value: mongodb+srv://merntask:9phrbVoQtbtcqAaD@cluster0.xhouvqy.mongodb.net/MERNTASK?retryWrites=true&w=majority
+      - key: CLIENT_ORIGIN
+        value: https://TASK.onrender.com
+  - type: static
+    name: task-frontend
+    rootDir: client
+    plan: free
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    autoDeploy: true
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://TASK.onrender.com

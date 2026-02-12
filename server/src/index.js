@@ -17,16 +17,8 @@ const MONGODB_URI =
   process.env.MONGODB_URI || 'mongodb://localhost:27017/bits_and_volts_users';
 const CLIENT_ORIGIN =
   process.env.CLIENT_ORIGIN || 'http://localhost:5173';
-
-// Connect to DB
-connectDB(MONGODB_URI);
-
-// Middlewares
-app.use(
-  cors({
-    origin: CLIENT_ORIGIN,
-  })
-);
+const corsOptions = CLIENT_ORIGIN ? { origin: CLIENT_ORIGIN } : undefined;
+app.use(cors(corsOptions));
 
 app.use(morgan('dev'));
 app.use(express.json());

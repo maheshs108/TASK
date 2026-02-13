@@ -1,23 +1,13 @@
 {
   "name": "bits-and-volts-mern-backend",
   "version": "1.0.0",
-  "description": "Backend for Bits and Volts MERN assessment (user management CRUD with pagination, search, CSV export).",
+  "description": "Backend for Bits and Volts MERN assessment",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "build": "npm install --include=dev --prefix ../client && npm run build --prefix ../client"
   },
-  "keywords": [
-    "express",
-    "mongodb",
-    "mongoose",
-    "csv",
-    "pagination",
-    "user-management"
-  ],
-  "author": "",
-  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
     "csv-writer": "^1.6.0",

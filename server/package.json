@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "build": "npm install --include=dev --prefix ../client && npm run build --prefix ../client"
+    "build": "cd ../client && npm install && npm run build"
   },
   "keywords": [
     "express",

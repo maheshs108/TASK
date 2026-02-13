@@ -1,5 +1,10 @@
+@"
 node_modules
+client/node_modules
+server/node_modules
+
+client/dist
+
 .env
-frontend/node_modules
-backend/node_modules
-frontend/dist
+server/.env
+"@ | Out-File -Encoding utf8 .gitignore
